@@ -14,7 +14,7 @@ def read(file):
     return answer
 
 
-def test_get_page1():
+def test_get_page():
     with tempfile.TemporaryDirectory() as test_dir:
         name = engine.formation_name(url)
         dir_name = name[:-5]
