@@ -38,13 +38,13 @@
 
 <p>pip3 install -i https://test.pypi.org/simple –extra-index-url https://pypi.org/simple GreyWolf_Page_Loader</p>
 
-<p><a href="https://asciinema.org/a/hmrNvvjOP9Zx7O7CxExwRSDdt" target="_blank"><img src="https://asciinema.org/a/hmrNvvjOP9Zx7O7CxExwRSDdt.svg" /></a></p>
+
 
 <h1 id="usage-example">Usage example</h1>
 
 <p>Run pageloader –help to get short help</p>
 
-<p><a href="https://asciinema.org/a/knFtYscHiZczz2twtG2XvTC5L" target="_blank"><img src="https://asciinema.org/a/knFtYscHiZczz2twtG2XvTC5L.svg" /></a></p>
+
 
 
       
