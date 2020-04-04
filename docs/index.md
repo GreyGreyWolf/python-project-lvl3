@@ -14,7 +14,7 @@
 <meta property="og:url" content="https://greygreywolf.github.io/python-project-lvl3/" />
 <meta property="og:site_name" content="python-project-lvl3" />
 <script type="application/ld+json">
-{"headline":"python-project-lvl3","@type":"WebSite","url":"https://greygreywolf.github.io/python-project-lvl3/","name":"python-project-lvl3","@context":"https://schema.org"}</script>
+
 <!-- End Jekyll SEO tag -->
 
     <link rel="stylesheet" href="/python-project-lvl3/assets/css/style.css?v=f81b7433e62d31eb36a9de1f60a860b230c661e6">
