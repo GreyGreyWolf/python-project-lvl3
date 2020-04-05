@@ -18,7 +18,7 @@ def formation_name(url):
         file_name = file_name[4:]
     for sym in file_name:
         if sym in " ?.!/;:":
-            file_name = file_name.replace(sym,'-') 
+            file_name = file_name.replace(sym, '-')
     file_name = '{}.{}'.format(file_name, 'html')
     return file_name
 
