@@ -16,8 +16,9 @@ def formation_name(url):
     file_name = unformatted_name.netloc + unformatted_name.path
     if file_name.startswith('www'):
         file_name = file_name[4:]
-    file_name = file_name.replace('.', '-')
-    file_name = file_name.replace('/', '-')
+    for sym in file_name:
+        if sym in " ?.!/;:":
+            file_name = file_name.replace(sym,'-') 
     file_name = '{}.{}'.format(file_name, 'html')
     return file_name
 
