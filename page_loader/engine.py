@@ -13,27 +13,27 @@ def start():
 
 def formation_name(url):
     unformatted_name = urllib.parse.urlparse(url)
-    new_name = unformatted_name.netloc + unformatted_name.path
-    if new_name.startswith('www'):
-        new_name = new_name[4:]
-    new_name = new_name.replace('.', '-')
-    new_name = new_name.replace('/', '-')
-    new_name = '{}.{}'.format(new_name, 'html')
-    return new_name
+    file_name = unformatted_name.netloc + unformatted_name.path
+    if file_name.startswith('www'):
+        file_name = file_name[4:]
+    file_name = file_name.replace('.', '-')
+    file_name = file_name.replace('/', '-')
+    file_name = '{}.{}'.format(file_name, 'html')
+    return file_name
 
 
-def create_dir(output, new_name):
-    dir_name = new_name[:-5]
+def create_dir(output, file_name):
+    dir_name = file_name[:-5]
     resource_dir_name = os.path.join(output, dir_name)
     os.makedirs(resource_dir_name)
-    full_path = os.path.join(resource_dir_name, new_name)
+    full_path = os.path.join(resource_dir_name, file_name)
     return full_path
 
 
 def get_page(output, url):
     request = requests.get(url)
     request.encoding
-    new_name = formation_name(url)
-    full_path = create_dir(output, new_name)
+    file_name = formation_name(url)
+    full_path = create_dir(output, file_name)
     with open(full_path, 'wb') as html_file:
         html_file.write(request.content)
