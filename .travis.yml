@@ -14,6 +14,7 @@ before_install:
   - pip install pytest-cov
   - pip install coverage
   - pip install PyYAML
+  - pip install lxml
 
 install:
   - make install
