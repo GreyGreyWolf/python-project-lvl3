@@ -17,6 +17,7 @@ pytest-cov = "^2.8.1"
 coverage = "^5.0.4"
 requests = "^2.22.0"
 pathlib = "^1.0.1"
+bs4 = "^0.0.1"
 
 [tool.poetry.scripts]
 pageloader = 'page_loader.script.pageloader:main'
