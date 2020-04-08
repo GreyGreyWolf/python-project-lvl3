@@ -1,7 +1,7 @@
 import requests
 import os
 import urllib
-from bs4 import BeautifulSoup
+import bs4
 from page_loader.cli import init_argparser
 
 
@@ -9,7 +9,7 @@ def start():
     parser = init_argparser()
     args = parser.parse_args()
     get_page(args.output, args.url)
-    print('\nPage loading is complete'.upper())
+    print('\nPage loading is complete\n'.upper())
 
 
 def create_name_page(url):
@@ -24,10 +24,13 @@ def create_name_page(url):
     return page_name
 
 
-def create_name_file(path):
-    for sym in path:
+def create_name_file(html_link):
+    name_file = html_link
+    if name_file.startswith('/'):
+        name_file = html_link[1:]
+    for sym in name_file:
         if sym in " ?!/;:":
-            name_file = path.replace(sym, '-')
+            name_file = html_link.replace(sym, '-')
     return name_file
     
 
@@ -40,33 +43,24 @@ def create_dir_page(output, page_name):
 
 
 def create_dir_file(full_path_page):
-    if full_path_page.endswith('/'):
-        path_files = full_path_page[:-1] + '_files'
-    else:
-        path_files = full_path_page + '_files'
-    os.makedirs(path_files)
-    return path_files
+    dir_files = full_path_page[:-5] + '_files'
+    os.makedirs(dir_files)
+    return dir_files
 
 
-# def change_page(full_path_page, path_files):
-#     with open(full_path_page, 'r') as editable_file:
-#         contetnts = editable_file.read()
-#         soup = BeautifulSoup(contetnts, 'lxml')
-#         tags = soup.findAll(['link','script', 'img'])
-#         for tag in tags:
-#             if tag.find('src'):
-#                 full_path_files = os.path.join(path_files, create_name_file(?) )
-#                 with open(path_files, 'w') as new_file:
-#                     new_file.write()
-#                 tag.replace_with(create_name_file(tag.text)
+# def change_page(html_file, dir_files):
+#     with open(html_file) as editable_file:
+#         soup = bs4.BeautifulSoup(editable_file, 'xml')
+#         for tag in soup.find_all(['link', 'script', 'img'])
+
 
 
 def get_page(output, url):
     request = requests.get(url)
     request.encoding
-    file_name = create_name_page(url)
-    full_path_page = create_dir_page(output, file_name)
-    path_files = create_dir_file(full_path_page)
+    page_name = create_name_page(url)
+    full_path_page = create_dir_page(output, page_name)
+    dir_files = create_dir_file(full_path_page)
     with open(full_path_page, 'wb') as html_file:
         html_file.write(request.content)
-    change_page(full_path_page, path_files)
+    # change_page(full_path_page, dir_files)

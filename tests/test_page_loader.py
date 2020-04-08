@@ -24,7 +24,7 @@ def test_create_dir_page():
 
 def test_create_page():
     with tempfile.TemporaryDirectory() as test_dir:
-        page_name = engine.formation_name_page(url)
+        page_name = engine.create_name_page(url)
         dir_name = page_name[:-5]
         resource_dir_name = os.path.join(test_dir, dir_name)
         full_created_path = os.path.join(resource_dir_name, page_name)
