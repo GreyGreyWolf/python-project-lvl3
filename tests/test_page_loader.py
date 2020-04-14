@@ -8,7 +8,7 @@ url = 'https://greygreywolf.github.io/python-project-lvl3/'
 
 
 def test_create_name_page():
-    expected_name = 'greygreywolf-github-io-python-project-lvl3-.html'
+    expected_name = 'greygreywolf-github-io-python-project-lvl3.html'
     recieved_name = engine.create_name(url)
     assert expected_name == recieved_name
 
