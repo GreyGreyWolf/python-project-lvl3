@@ -3,6 +3,7 @@ import requests
 import sys
 import logging
 import os
+from progress.bar import FillingSquaresBar
 from page_loader.created import create_name, create_dir
 from page_loader.filter import get_content, write_content, filter_tag
 from page_loader.cli import init_argparser, qualifier
@@ -15,6 +16,8 @@ class PageLoaderException(Exception):
 logger = logging.getLogger(__name__)
 logger.setLevel(logging.DEBUG)
 
+
+bar = FillingSquaresBar('Process download', max=30)
 
 def start():
     parser = init_argparser()
@@ -39,20 +42,20 @@ def start():
     logger.addHandler(console)
     try:
         get_page(path, url)
-        print('')
-        print('Page loading is complete'.upper())
-        print('')
     except PageLoaderException:
         sys.exit(1)
     else:
         sys.exit(0)
 
 
+
 def get_page(output, url):
     logger.info('Start program!')
     page_name = create_name(url)
+    bar.next()
     try:
         path_page, dir_files = create_dir(output, page_name)
+        bar.next()
     except PermissionError as e:
         logger.debug(sys.exc_info()[:2])
         logger.error('No rights to make changes.')
@@ -60,6 +63,7 @@ def get_page(output, url):
     logger.info('Dirrectory created!')
     try:
         request = get_content(url)
+        bar.next()
     except requests.exceptions.InvalidSchema as e:
         logger.debug(sys.exc_info()[:2])
         logger.error('Request parameters error')
@@ -77,10 +81,13 @@ def get_page(output, url):
     soup = bs4.BeautifulSoup(request.text, 'lxml')
     for tag in soup.find_all({'link': True, 'img': True, 'script': True}):
         filter_tag(tag, dir_files, url)
+        bar.next()
         logger.info('Tag-file uploaded!')
         html_page = soup.prettify('utf-8')
+        bar.next()
     try:
         write_content(html_page, path_page)
+        bar.next()
     except FileNotFoundError as e:
         logger.debug(sys.exc_info()[:2])
         logger.error('The specified directory does not exist')
@@ -91,3 +98,4 @@ def get_page(output, url):
         raise PageLoaderException() from e
     logger.info('HTML changed and saved')
     logger.info('Download is complete!')
+    bar.finish()
