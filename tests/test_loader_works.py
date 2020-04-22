@@ -2,7 +2,6 @@ import pytest
 import urllib
 import bs4
 import os
-import logging
 import tempfile
 from page_loader import engine, filter, created
 
@@ -10,44 +9,35 @@ from page_loader import engine, filter, created
 url = 'https://greygreywolf.github.io/python-project-lvl3/'
 
 
-def test_create_name_page():
-    expected_name = 'greygreywolf-github-io-python-project-lvl3.html'
-    recieved_name = created.create_name(url)
-    assert expected_name == recieved_name
-
-
-def test_create_name_dir_files():
-    expected_name = 'greygreywolf-github-io-python-project-lvl3_files'
-    with tempfile.TemporaryDirectory() as test_dir:
-        page_name = created.create_name(url)
-        path_page, dir_file = created.create_dir(test_dir, page_name)
-        recieved_name = os.path.basename(dir_file)
-        assert expected_name == recieved_name
-
-
-def test_create_name_files():
-    expected_name = 'python-project-lvl3-assets-css-style.css'
+def test_create_name():
+    expected_page = 'greygreywolf-github-io-python-project-lvl3.html'
+    expected_file = 'python-project-lvl3-assets-css-style.css'
     with tempfile.TemporaryDirectory() as test_dir:
         engine.get_page(test_dir, url)
-        page_name = created.create_name(url)
-        dir_name = page_name[:-5]
+        recieved_page = created.create_name(url)
+        dir_name = recieved_page[:-5]
         resource_dir_name = os.path.join(test_dir, dir_name)
-        path_page = os.path.join(resource_dir_name, page_name)
+        path_page = os.path.join(resource_dir_name, recieved_page)
         dir_file = path_page[:-5] + '_files'
-        received_name = os.listdir(dir_file)
-        assert expected_name == received_name[0]
+        received_file = os.listdir(dir_file)
+        assert expected_file == received_file[0]
+        assert expected_page == recieved_page
 
 
 def test_create_dir():
+    expected_dir_file = 'greygreywolf-github-io-python-project-lvl3_files'
     with tempfile.TemporaryDirectory() as test_dir:
         page_name = created.create_name(url)
         dir_name = page_name[:-5]
         resource_dir_name = os.path.join(test_dir, dir_name)
+        dir_file = resource_dir_name + '_files'
+        received_dir_file = os.path.basename(dir_file)
         engine.get_page(test_dir, url)
         assert True == os.path.exists(resource_dir_name)
+        assert expected_dir_file == received_dir_file    
 
 
-def test_create_page():
+def test_download_page():
     with tempfile.TemporaryDirectory() as test_dir:
         page_name = created.create_name(url)
         dir_name = page_name[:-5]
@@ -73,17 +63,3 @@ def test_download_file():
                 path_files = os.path.join(dir_files, created.create_name(tag['href']))
                 engine.get_page(test_dir, url)
                 assert True == os.path.isfile(path_files)
-
-
-def test_exception():
-    test_dir = tempfile.TemporaryDirectory()
-    name_dir = test_dir.name
-    with pytest.raises(engine.PageLoaderException) as excinfo:
-        engine.get_page(name_dir, 'hps://greygreywolf.github.io/python-project-lvl3/')
-    with pytest.raises(engine.PageLoaderException) as excinfo:
-        engine.get_page(name_dir, 'https://greygreywolf.giub.io/python-project-lvl3/')
-    with pytest.raises(engine.PageLoaderException):
-        engine.get_page('/', 'htps://greygreywolf.github.io/python-project-lvl3/')
-    with pytest.raises(engine.PageLoaderException) as excinfo:
-        engine.get_page(name_dir + '/bag', 'htps://greygreywolf.github.io/python-project-lvl3/')    
-    

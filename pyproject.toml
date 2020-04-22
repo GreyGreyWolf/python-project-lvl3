@@ -1,6 +1,6 @@
 [tool.poetry]
 name = "GreyWolf_Page_Loader"
-version = "0.1.5"
+version = "0.1.8"
 description = "Page Loader"
 authors = ["GreyGreyWolf"]
 packages = [
@@ -9,17 +9,19 @@ packages = [
 
 [tool.poetry.dependencies]
 python = "^3.6"
+requests = "^2.22.0"
+pathlib = "^1.0.1"
+bs4 = "^0.0.1"
+lxml = "^4.5.0"
+beautifulsoup4 = "^4.9.0"
+progress = "^1.5"
 
 [tool.poetry.dev-dependencies]
 flake8 = "^3.7.9"
 pytest = "^5.3.5"
 pytest-cov = "^2.8.1"
 coverage = "^5.0.4"
-requests = "^2.22.0"
-pathlib = "^1.0.1"
-bs4 = "^0.0.1"
-lxml = "^4.5.0"
-beautifulsoup4 = "^4.9.0"
+
 
 [tool.poetry.scripts]
 pageloader = 'page_loader.script.pageloader:main'
