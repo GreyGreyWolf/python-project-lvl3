@@ -24,14 +24,6 @@ tests = ["coverage", "hypothesis", "pympler", "pytest (>=4.3.0)", "six", "zope.i
 [[package]]
 category = "dev"
 description = "Screen-scraping library"
-name = "beautifulsoup"
-optional = false
-python-versions = "*"
-version = "3.2.2"
-
-[[package]]
-category = "dev"
-description = "Screen-scraping library"
 name = "beautifulsoup4"
 optional = false
 python-versions = "*"
@@ -205,6 +197,14 @@ dev = ["pre-commit", "tox"]
 
 [[package]]
 category = "dev"
+description = "Easy to use progress bars"
+name = "progress"
+optional = false
+python-versions = "*"
+version = "1.5"
+
+[[package]]
+category = "dev"
 description = "library with cross-python path, ini-parsing, io, code, log facilities"
 name = "py"
 optional = false
@@ -345,7 +345,7 @@ docs = ["sphinx", "jaraco.packaging (>=3.2)", "rst.linker (>=1.9)"]
 testing = ["jaraco.itertools", "func-timeout"]
 
 [metadata]
-content-hash = "8ef522f662edbee4de93f9ba8c9dc3adab65e0d69ab5205a333f960ff40aba8c"
+content-hash = "472125841604e9ce2a9f46239106ce5d62a2643d503473d0019af8f33b8251ed"
 python-versions = "^3.6"
 
 [metadata.files]
@@ -356,10 +356,6 @@ atomicwrites = [
 attrs = [
     {file = "attrs-19.3.0-py2.py3-none-any.whl", hash = "sha256:08a96c641c3a74e44eb59afb61a24f2cb9f4d7188748e76ba4bb5edfa3cb7d1c"},
     {file = "attrs-19.3.0.tar.gz", hash = "sha256:f7b7ce16570fe9965acd6d30101a28f62fb4a7f9e926b3bbc9b61f8b04247e72"},
-]
-beautifulsoup = [
-    {file = "BeautifulSoup-3.2.2-py2-none-any.whl", hash = "sha256:d31413d71f6ca027ff6b06c891b62ee8ff48267ccd969f881d810e5d1fe49565"},
-    {file = "BeautifulSoup-3.2.2.tar.gz", hash = "sha256:a04169602bff6e3138b1259dbbf491f5a27f9499dea9a8fbafd48843f9d89970"},
 ]
 beautifulsoup4 = [
     {file = "beautifulsoup4-4.9.0-py2-none-any.whl", hash = "sha256:a4bbe77fd30670455c5296242967a123ec28c37e9702a8a81bd2f20a4baf0368"},
@@ -477,6 +473,9 @@ pathlib = [
 pluggy = [
     {file = "pluggy-0.13.1-py2.py3-none-any.whl", hash = "sha256:966c145cd83c96502c3c3868f50408687b38434af77734af1e9ca461a4081d2d"},
     {file = "pluggy-0.13.1.tar.gz", hash = "sha256:15b2acde666561e1298d71b523007ed7364de07029219b604cf808bfa1c765b0"},
+]
+progress = [
+    {file = "progress-1.5.tar.gz", hash = "sha256:69ecedd1d1bbe71bf6313d88d1e6c4d2957b7f1d4f71312c211257f7dae64372"},
 ]
 py = [
     {file = "py-1.8.1-py2.py3-none-any.whl", hash = "sha256:c20fdd83a5dbc0af9efd622bee9a5564e278f6380fffcacc43ba6f43db2813b0"},
