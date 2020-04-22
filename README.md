@@ -23,7 +23,7 @@ Run pageloader --help to get short help
 
 # Logging example
 
-<a href="https://asciinema.org/a/PZ7jgiCJU2k5bvfF0reYyQjxQ" target="_blank"><img src="https://asciinema.org/a/PZ7jgiCJU2k5bvfF0reYyQjxQ.svg" /></a>
+<a href="https://asciinema.org/a/o1rlWtpkRp5lyaXuGriEefXPl" target="_blank"><img src="https://asciinema.org/a/o1rlWtpkRp5lyaXuGriEefXPl.svg" /></a>
 
 # Setting the logging level and error handling
 
