@@ -11,20 +11,20 @@ This CLI programm downloading remote web-pages to specified folder on your local
 
 # Installation
 
-python3 -m pip install --no-cache-dir --extra-index-url https://test.pypi.org/simple --extra-index-url https://pypi.org/simple GreyWolf_Page_Loader
+Installation Run next command for installing page-loader package pip install --no-cache-dir -i https://test.pypi.org/simple --extra-index-url https://pypi.org/simple GreyWolf_Page_Loader
 
 Run pageloader --help to get short help
 
-<a href="https://asciinema.org/a/acTWIMYnj8tflLqiHjAHKU7SR" target="_blank"><img src="https://asciinema.org/a/acTWIMYnj8tflLqiHjAHKU7SR.svg" /></a>
+<a href="https://asciinema.org/a/3IK1ttAG9a8JxDuKTqPGSwk6l" target="_blank"><img src="https://asciinema.org/a/3IK1ttAG9a8JxDuKTqPGSwk6l.svg" /></a>
 
 # Usage example and show the resource loading process
 
-<a href="https://asciinema.org/a/E1ffYPC4h8X3R3K6pdJiQ3Bu2" target="_blank"><img src="https://asciinema.org/a/E1ffYPC4h8X3R3K6pdJiQ3Bu2.svg" /></a>
+<a href="https://asciinema.org/a/qkuL9B3wHK19W8u4iBGnoBdqK" target="_blank"><img src="https://asciinema.org/a/qkuL9B3wHK19W8u4iBGnoBdqK.svg" /></a>
 
 # Logging example
 
-<a href="https://asciinema.org/a/o1rlWtpkRp5lyaXuGriEefXPl" target="_blank"><img src="https://asciinema.org/a/o1rlWtpkRp5lyaXuGriEefXPl.svg" /></a>
+<a href="https://asciinema.org/a/XrCl3PAz3bphZP1wOFT2KSiyW" target="_blank"><img src="https://asciinema.org/a/XrCl3PAz3bphZP1wOFT2KSiyW.svg" /></a>
 
-# Setting the logging level and error handling
+# Error handling
 
-<a href="https://asciinema.org/a/K3wwOXijKEpWrf0acbBfTeBJs" target="_blank"><img src="https://asciinema.org/a/K3wwOXijKEpWrf0acbBfTeBJs.svg" /></a>
+<a href="https://asciinema.org/a/QHJstV0MbzHPK88YOXwA0mCnV" target="_blank"><img src="https://asciinema.org/a/QHJstV0MbzHPK88YOXwA0mCnV.svg" /></a>
