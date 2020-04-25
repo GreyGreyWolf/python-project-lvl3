@@ -1,15 +1,15 @@
 import argparse
 import logging
-from pathlib import Path
+import os
 
 
-default_path = Path().absolute()
 text_download = '{} or {}'.format(
             'Specify the path to save the page (Example: /var/tmp)',
             'use by default (current directory)')
-text_logger = 'specify the logging level:{}'.format(
-     '"debuf", "info", "warning", "error", "critical"')
-text_raise = '"debug", "info", "warning", "error", "critical"'
+text_logger = 'Specify the logging level:{}'.format(
+    '"debuf", "info", "warning", "error", "critical" or use by default (INFO)')
+text_paths = (
+    '''The specified path does not exist or no rights to make changes''')
 
 
 def qualifier(param):
@@ -23,9 +23,15 @@ def qualifier(param):
         return logging.ERROR
     elif param == 'critical':
         return logging.CRITICAL
-    raise argparse.ArgumentTypeError(
-        'Unknown parametr: "{}". Use one of this: {}'.format(
-            param, text_raise))
+
+
+def checking_paths(path):
+    acces = os.access(path, os.W_OK)
+    existence_path = os.path.isdir(path)
+    if existence_path and acces:
+        return path
+    else:
+        raise argparse.ArgumentTypeError(text_paths)
 
 
 def init_argparser():
@@ -34,13 +40,12 @@ def init_argparser():
     parser.add_argument('url', type=str, help='enter a link')
     parser.add_argument(
         '-o', '--output',
-        default=default_path,
+        type=checking_paths,
+        default='.',
         help=text_download)
     parser.add_argument(
         '-l', '--log',
         default='info',
-        # choices=[
-        #     'debug', 'info',
-        #     'warning', 'error', 'critical'],
+        choices=['debug', 'info', 'warning', 'error', 'critical'],
         help=text_logger)
     return parser

@@ -19,7 +19,7 @@ Run pageloader --help to get short help
 
 # Usage example and show the resource loading process
 
-<a href="https://asciinema.org/a/qkuL9B3wHK19W8u4iBGnoBdqK" target="_blank"><img src="https://asciinema.org/a/qkuL9B3wHK19W8u4iBGnoBdqK.svg" /></a>
+<a href="https://asciinema.org/a/OOk77BHpXloHgksuYdTMm3H0w" target="_blank"><img src="https://asciinema.org/a/OOk77BHpXloHgksuYdTMm3H0w.svg" /></a>
 
 # Logging example
 

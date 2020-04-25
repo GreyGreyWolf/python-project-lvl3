@@ -1,62 +1,41 @@
 import bs4
-import requests
-import sys
-from page_loader.script.pageloader import PageLoaderException, logger
 from progress.bar import FillingSquaresBar
 from page_loader.created import create_name, create_dir
-from page_loader import filter
+from page_loader import filter, cli
+from page_loader.logger import logger
 
 
 bar = FillingSquaresBar('Process download', max=30)
+
+
+def start():
+    parser = cli.init_argparser()
+    args = parser.parse_args()
+    path = args.output
+    url = args.url
+    get_page(path, url)
 
 
 def get_page(output, url):
     logger.info('Start program!')
     page_name = create_name(url)
     bar.next()
-    try:
-        path_page, dir_files = create_dir(output, page_name)
-        bar.next()
-    except PermissionError as e:
-        logger.debug(sys.exc_info()[:2])
-        logger.error('No rights to make changes.')
-        raise PageLoaderException() from e
-    logger.info('Dirrectory created!')
-    try:
-        request = filter.get_content(url)
-        bar.next()
-    except requests.exceptions.InvalidSchema as e:
-        logger.debug(sys.exc_info()[:2])
-        logger.error('Request parameters error')
-        raise PageLoaderException() from e
-    except requests.exceptions.ConnectionError as e:
-        logger.debug(sys.exc_info()[:2])
-        logger.error(
-            'Invalid site address or connection error'
-            )
-        raise PageLoaderException() from e
-    except requests.exceptions.Timeout as e:
-        logger.debug(sys.exc_info()[:2])
-        logger.error('Timed out waiting for a response')
-        raise PageLoaderException() from e
+    path_page, dir_files = create_dir(output, page_name)
+    bar.next()
+    logger.info('The directory creation process is complete')
+    request = filter.get_content(url)
+    bar.next()
     soup = bs4.BeautifulSoup(request.text, 'lxml')
     for tag in soup.find_all({'link': True, 'img': True, 'script': True}):
         filter.filter_tag(tag, dir_files, url)
         bar.next()
-        logger.info('Tag-file uploaded!')
         html_page = soup.prettify('utf-8')
         bar.next()
-    try:
         filter.write_content(html_page, path_page)
         bar.next()
-    except FileNotFoundError as e:
-        logger.debug(sys.exc_info()[:2])
-        logger.error('The specified directory does not exist')
-        raise PageLoaderException() from e
-    except MemoryError as e:
-        logger.debug(sys.exc_info()[:2])
-        logger.error('Not enough space to write the file')
-        raise PageLoaderException() from e
-    logger.info('HTML changed and saved')
-    logger.info('Download is complete!')
+    logger.info('The download page and the data is complete')
+    logger.info('Process download is complete!')
     bar.finish()
+    print('')
+    print(f'The download is complete. Data is saved in {output}')
+    print('')
