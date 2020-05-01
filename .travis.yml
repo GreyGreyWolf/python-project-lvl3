@@ -28,7 +28,6 @@ before_script:
 script:
     - make lint
     - make test
-    - make cov_test_to_xml
-  
+
 after_script:
   - ./cc-test-reporter after-build --exit-code $TRAVIS_TEST_RESULT

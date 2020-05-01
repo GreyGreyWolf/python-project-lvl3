@@ -1,12 +1,14 @@
-from page_loader import engine, logger
+from page_loader import engine
 import sys
 
 
 def main():
     try:
         engine.start()
-    except logger.PageLoaderException:
+    except engine.PageLoaderException:
         sys.exit(1)
+    else:
+        sys.exit(0)
 
 
 if __name__ == '__main__':

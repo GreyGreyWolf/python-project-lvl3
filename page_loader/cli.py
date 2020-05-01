@@ -10,6 +10,7 @@ text_logger = 'Specify the logging level:{}'.format(
     '"debuf", "info", "warning", "error", "critical" or use by default (INFO)')
 text_paths = (
     '''The specified path does not exist or no rights to make changes''')
+default_path = os.getcwd()
 
 
 def qualifier(param):
@@ -37,15 +38,17 @@ def checking_paths(path):
 def init_argparser():
     parser = argparse.ArgumentParser(
         prog='download', description='Page Loader')
-    parser.add_argument('url', type=str, help='enter a link')
+    parser.add_argument('-u', '--url', type=str, dest='url',
+                        help='enter a link')
     parser.add_argument(
         '-o', '--output',
         type=checking_paths,
-        default='.',
+        default=default_path,
         help=text_download)
     parser.add_argument(
         '-l', '--log',
         default='info',
         choices=['debug', 'info', 'warning', 'error', 'critical'],
         help=text_logger)
-    return parser
+    args = parser.parse_args()
+    return args.url, args.output, qualifier(args.log)

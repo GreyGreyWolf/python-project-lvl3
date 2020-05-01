@@ -3,7 +3,11 @@ import urllib
 import bs4
 import os
 import tempfile
-from page_loader import engine, filter, created
+import logging
+from page_loader import cli
+from page_loader import filter
+from page_loader import created
+from page_loader import engine
 
 
 url = 'https://greygreywolf.github.io/python-project-lvl3/'
@@ -63,3 +67,11 @@ def test_download_file():
                 path_files = os.path.join(dir_files, created.create_name(tag['href']))
                 engine.get_page(test_dir, url)
                 assert True == os.path.isfile(path_files)
+
+
+def test_init_argparser():
+    assert cli.qualifier('debug') == logging.DEBUG
+    assert cli.qualifier('info') == logging.INFO
+    assert cli.qualifier('error') == logging.ERROR
+    assert cli.qualifier('warning') == logging.WARNING
+    assert cli.qualifier('critical') == logging.CRITICAL

@@ -1,24 +1,11 @@
 import logging
 import os
-from page_loader import cli
-
-
-class PageLoaderException(Exception):
-    pass
-
-
-parser = cli.init_argparser()
-args = parser.parse_args()
-level = args.log
-level = cli.qualifier(level)
-path = cli.checking_paths(args.output)
 
 
 def get_console_handler():
     console_handler = logging.StreamHandler()
     console_handler.setLevel(logging.ERROR)
-    FORMATTER = logging.Formatter(
-     '%(asctime)s - %(message)s')
+    FORMATTER = logging.Formatter('%(message)s')
     console_handler.setFormatter(FORMATTER)
     return console_handler
 
@@ -39,6 +26,3 @@ def get_logger(path, level):
     logger.addHandler(get_console_handler())
     logger.addHandler(get_file_handler(path, level))
     return logger
-
-
-logger = get_logger(path, level)

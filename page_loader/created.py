@@ -1,7 +1,7 @@
 import os
 import urllib
 import sys
-from page_loader.logger import logger, PageLoaderException
+from page_loader import engine
 
 
 def normalize_name(name):
@@ -27,14 +27,14 @@ def create_name(url):
         if main.endswith('-'):
             main = main[:-1]
         name = '{}.{}'.format(main, exten)
-        logger.info('The name of the file generated!')
+        engine.app_log.info('The name of the file generated!')
     else:
         if parsed_link.netloc.startswith('www'):
             parsed_link.netloc = parsed_link.netloc[4:]
         name = parsed_link.netloc + parsed_link.path
         name = normalize_name(name)
         name = '{}.{}'.format(name, 'html')
-        logger.info('The name of the page generated!')
+        engine.app_log.info('The name of the page generated!')
     return name
 
 
@@ -43,26 +43,21 @@ def create_dir(output, page_name):
     resource_dir_name = os.path.join(output, dir_name)
     try:
         os.makedirs(resource_dir_name)
+    except FileExistsError as e:
+        engine.app_log.debug(sys.exc_info()[:2])
+        engine.app_log.error('The file already exists')
+        raise engine.PageLoaderException() from e
     except FileNotFoundError as e:
-        logger.debug(sys.exc_info()[:2])
-        logger.error('The specified directory does not exist')
-        raise PageLoaderException() from e
+        engine.app_log.debug(sys.exc_info()[:2])
+        engine.app_log.error('The specified directory does not exist')
+        raise engine.PageLoaderException() from e
     except PermissionError as e:
-        logger.debug(sys.exc_info()[:2])
-        logger.error('No rights to make changes.')
-        raise PageLoaderException() from e
-    logger.info('The directory page is created!')
+        engine.app_log.debug(sys.exc_info()[:2])
+        engine.app_log.error('No rights to make changes.')
+        raise engine.PageLoaderException() from e
+    engine.app_log.info('The directory page is created!')
     path_page = os.path.join(resource_dir_name, page_name)
     path_files = path_page[:-5] + '_files'
-    try:
-        os.makedirs(path_files)
-    except FileNotFoundError as e:
-        logger.debug(sys.exc_info()[:2])
-        logger.error('The specified directory does not exist')
-        raise PageLoaderException() from e
-    except PermissionError as e:
-        logger.debug(sys.exc_info()[:2])
-        logger.error('No rights to make changes.')
-        raise PageLoaderException() from e
-    logger.info('The file page is created!')
+    os.makedirs(path_files)
+    engine.app_log.info('The file page is created!')
     return path_page, path_files

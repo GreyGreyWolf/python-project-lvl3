@@ -15,16 +15,16 @@ Installation Run next command for installing page-loader package pip install --n
 
 Run pageloader --help to get short help
 
-<a href="https://asciinema.org/a/3IK1ttAG9a8JxDuKTqPGSwk6l" target="_blank"><img src="https://asciinema.org/a/3IK1ttAG9a8JxDuKTqPGSwk6l.svg" /></a>
+<a href="https://asciinema.org/a/lt9gArhL6vOCnypFkv7J7bbcE" target="_blank"><img src="https://asciinema.org/a/lt9gArhL6vOCnypFkv7J7bbcE.svg" /></a>
 
 # Usage example and show the resource loading process
 
-<a href="https://asciinema.org/a/OOk77BHpXloHgksuYdTMm3H0w" target="_blank"><img src="https://asciinema.org/a/OOk77BHpXloHgksuYdTMm3H0w.svg" /></a>
+<a href="https://asciinema.org/a/UQgtbGzYf5haKneSluAnQ7MlM" target="_blank"><img src="https://asciinema.org/a/UQgtbGzYf5haKneSluAnQ7MlM.svg" /></a>
 
 # Logging example
 
-<a href="https://asciinema.org/a/XrCl3PAz3bphZP1wOFT2KSiyW" target="_blank"><img src="https://asciinema.org/a/XrCl3PAz3bphZP1wOFT2KSiyW.svg" /></a>
+<a href="https://asciinema.org/a/68McQidy7xPm4IR2plEdOdAH2" target="_blank"><img src="https://asciinema.org/a/68McQidy7xPm4IR2plEdOdAH2.svg" /></a>
 
 # Error handling
 
-<a href="https://asciinema.org/a/QHJstV0MbzHPK88YOXwA0mCnV" target="_blank"><img src="https://asciinema.org/a/QHJstV0MbzHPK88YOXwA0mCnV.svg" /></a>
+<a href="https://asciinema.org/a/XuVl31jWt9HB3ksgFWD2dSCDh" target="_blank"><img src="https://asciinema.org/a/XuVl31jWt9HB3ksgFWD2dSCDh.svg" /></a>
