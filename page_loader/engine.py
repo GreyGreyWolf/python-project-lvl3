@@ -16,7 +16,7 @@ def start():
     parser = init_argparser()
     args = parser.parse_args()
     main_log = logger.get_logger(
-        args.output, qualifier(args.log), 'main_logger')
+        args.output, qualifier(args.log), 'main_logger')  # noqa: F841
     get_page(args.output, args.url)
 
 
