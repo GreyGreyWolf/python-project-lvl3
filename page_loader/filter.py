@@ -19,8 +19,7 @@ def get_content(url):
     except requests.exceptions.ConnectionError as e:
         filter_get_log.debug(sys.exc_info()[:2])
         filter_get_log.error(
-            'Invalid site address or connection error'
-            )
+            'Invalid site address or connection error')
         raise engine.PageLoaderException() from e
     if request.status_code in [400, 403, 404, 410, 500, 503]:
         filter_get_log.error('The page does not respond')

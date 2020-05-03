@@ -4,8 +4,8 @@ import os
 
 
 text_download = '{} or {}'.format(
-            'Specify the path to save the page (Example: /var/tmp)',
-            'use by default (current directory)')
+    'Specify the path to save the page (Example: /var/tmp)',
+    'use by default (current directory)')
 text_logger = 'Specify the logging level:{}'.format(
     '"debuf", "info", "warning", "error", "critical" or use by default (INFO)')
 text_paths = (
