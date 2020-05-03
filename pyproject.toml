@@ -1,6 +1,6 @@
 [tool.poetry]
 name = "GreyWolf_Page_Loader"
-version = "0.3.1"
+version = "0.3.2"
 description = "Page Loader"
 authors = ["GreyGreyWolf"]
 packages = [
@@ -15,6 +15,7 @@ bs4 = "^0.0.1"
 lxml = "^4.5.0"
 beautifulsoup4 = "^4.9.0"
 progress = "^1.5"
+pytest-cov = "^2.8.1"
 
 [tool.poetry.dev-dependencies]
 flake8 = "^3.7.9"
