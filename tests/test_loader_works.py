@@ -4,10 +4,7 @@ import bs4
 import os
 import tempfile
 import logging
-from page_loader import cli
-from page_loader import filter
-from page_loader import created
-from page_loader import engine
+from page_loader import filter, created, engine, cli
 
 
 url = 'https://greygreywolf.github.io/python-project-lvl3/'

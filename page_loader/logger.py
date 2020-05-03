@@ -20,8 +20,8 @@ def get_file_handler(path, level):
     return file_handler
 
 
-def get_logger(path, level):
-    logger = logging.getLogger(__name__)
+def get_logger(path, level, name):
+    logger = logging.getLogger(name)
     logger.setLevel(logging.DEBUG)
     logger.addHandler(get_console_handler())
     logger.addHandler(get_file_handler(path, level))

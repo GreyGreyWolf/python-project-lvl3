@@ -50,5 +50,4 @@ def init_argparser():
         default='info',
         choices=['debug', 'info', 'warning', 'error', 'critical'],
         help=text_logger)
-    args = parser.parse_args()
-    return args.url, args.output, qualifier(args.log)
+    return parser

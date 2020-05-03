@@ -1,31 +1,33 @@
 import bs4
+import logging
 from progress.bar import FillingSquaresBar
-from page_loader import cli
-from page_loader import created
-from page_loader import filter
-from page_loader import logger
+from page_loader.cli import init_argparser, qualifier
+from page_loader import created, filter, logger
 
 
 class PageLoaderException(Exception):
     pass
 
 
-url, output, level = cli.init_argparser()
-app_log = logger.get_logger(output, level)
 bar = FillingSquaresBar('Process download', max=12)
 
 
 def start():
-    get_page(output, url)
+    parser = init_argparser()
+    args = parser.parse_args()
+    main_log = logger.get_logger(
+        args.output, qualifier(args.log), 'main_logger')
+    get_page(args.output, args.url)
 
 
 def get_page(output, url):
-    app_log.info('Start program!')
+    engine_log = logging.getLogger('main_logger.module_engine')
+    engine_log.info('Start program!')
     page_name = created.create_name(url)
     bar.next()
     path_page, dir_files = created.create_dir(output, page_name)
     bar.next()
-    app_log.info('The directory creation process is complete')
+    engine_log.info('The directory creation process is complete')
     bar.next()
     request = filter.get_content(url)
     bar.next()
@@ -36,8 +38,8 @@ def get_page(output, url):
         bar.next()
         filter.write_content(html_page, path_page)
         bar.next()
-    app_log.info('The download page and the data is complete')
-    app_log.info('Process download is complete!')
+    engine_log.info('The download page and the data is complete')
+    engine_log.info('Process download is complete!')
     bar.finish()
     print('')
     print(f'The download is complete. Data is saved in {output}')
