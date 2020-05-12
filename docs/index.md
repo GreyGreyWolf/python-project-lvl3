@@ -1,4 +1,3 @@
-<!DOCTYPE html>
 <html>
 <body>
 <h1>BestBook</h1>
