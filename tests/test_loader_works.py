@@ -2,68 +2,83 @@ import pytest
 import urllib
 import bs4
 import os
+import re
 import tempfile
 import logging
-from page_loader import filter, created, engine, cli
+from page_loader import getter, prepare, engine, cli
 
 
-url = 'https://greygreywolf.github.io/python-project-lvl3/'
+current_doc = ['<link class="main-stylesheet" href="/css/global.min.css" rel="stylesheet" type="text/css" />',
+                '<link class="main-stylesheet" href="/css/icons.min.css" rel="stylesheet" type="text/css" />',
+                 '<link class="main-stylesheet" href="/css/fonts.css" rel="stylesheet" type="text/css" />',
+                  '<link class="main-stylesheet" href="/css/main.css" rel="stylesheet" type="text/css" />']
 
 
-def test_create_name():
-    expected_page = 'greygreywolf-github-io-python-project-lvl3.html'
-    expected_file = 'python-project-lvl3-assets-css-style.css'
+def test_normalize_name():
+    current_names = ['https://greygreywolf.github.io/python-project-lvl3/',
+                      'https://python-poetry.org',
+                       '/name/name']
+    expected_names = ['https---greygreywolf-github-io-python-project-lvl3',
+                       'https---python-poetry-org',
+                        'name-name']
+    for elem in current_names:
+        received_name = prepare.normalize_name(elem)
+        status = received_name  in expected_names
+        assert status == True
+
+
+def test_get_valid_name():
+    current_names = ['https://greygreywolf.io/python-project-lvl3/',
+                      'www.python-poetry.org',
+                       '/python-project-lvl3/assets/css/style.css?v=82b94381e']
+    expected_names = ['greygreywolf-io-python-project-lvl3.html',
+                       'www-python-poetry.org',
+                        'python-project-lvl3-assets-css-style.css']
+    for elem in current_names:
+        received_name = prepare.get_valid_name(elem)
+        status = received_name in expected_names
+        assert status == True
+
+
+def test_prepare_directory():
+    expected_name_page_directory = 'test'
+    expected_name_files_directory = 'test_files'
     with tempfile.TemporaryDirectory() as test_dir:
-        engine.get_page(test_dir, url)
-        recieved_page = created.create_name(url)
-        dir_name = recieved_page[:-5]
-        resource_dir_name = os.path.join(test_dir, dir_name)
-        path_page = os.path.join(resource_dir_name, recieved_page)
-        dir_file = path_page[:-5] + '_files'
-        received_file = os.listdir(dir_file)
-        assert expected_file == received_file[0]
-        assert expected_page == recieved_page
+        path_page, files_directory = prepare.prepare_directory(test_dir, 'test.html')
+        page_directory = os.path.dirname(path_page)
+        name_page_directory = os.path.basename(page_directory)
+        name_files_directory = os.path.basename(files_directory)
+        status_page_directory = os.path.exists(page_directory)
+        status_path_files = os.path.exists(files_directory)
+        assert status_page_directory == True
+        assert status_path_files == True
+        assert name_page_directory == expected_name_page_directory
+        assert name_files_directory == expected_name_files_directory
 
 
-def test_create_dir():
-    expected_dir_file = 'greygreywolf-github-io-python-project-lvl3_files'
-    with tempfile.TemporaryDirectory() as test_dir:
-        page_name = created.create_name(url)
-        dir_name = page_name[:-5]
-        resource_dir_name = os.path.join(test_dir, dir_name)
-        dir_file = resource_dir_name + '_files'
-        received_dir_file = os.path.basename(dir_file)
-        engine.get_page(test_dir, url)
-        assert True == os.path.exists(resource_dir_name)
-        assert expected_dir_file == received_dir_file    
-
-
-def test_download_page():
-    with tempfile.TemporaryDirectory() as test_dir:
-        page_name = created.create_name(url)
-        dir_name = page_name[:-5]
-        resource_dir_name = os.path.join(test_dir, dir_name)
-        full_created_path = os.path.join(resource_dir_name, page_name)
-        engine.get_page(test_dir, url)
-        assert True == os.path.isfile(full_created_path)
-
-
-def test_download_file():
-    with tempfile.TemporaryDirectory() as test_dir:
-        page_name = created.create_name(url)
-        path_page, dir_files = created.create_dir(test_dir, page_name)
-        request = filter.get_content(url)
-        soup = bs4.BeautifulSoup(request.text, 'lxml')
+def test_get_tag():
+    expected_number_resources = len(current_doc)
+    receivde_resources = {}
+    soup = bs4.BeautifulSoup(''.join(current_doc), 'lxml')
     for tag in soup.find_all({'link': True, 'img': True, 'script': True}):
-        domain = urllib.parse.urlparse(url)
-        if tag.name == 'link' and tag.has_attr('href'):
-            internal_reference = urllib.parse.urlparse(tag['href'])
-            path = urllib.parse.urlparse(tag['href']).path
-            extn = os.path.splitext(path)[1]
-            if extn and not internal_reference.netloc:
-                path_files = os.path.join(dir_files, created.create_name(tag['href']))
-                engine.get_page(test_dir, url)
-                assert True == os.path.isfile(path_files)
+        receivde_resources.update(getter.get_tag(tag, './test_dir', 'https://mypage.org'))
+    print(receivde_resources)
+    assert len(receivde_resources)  == expected_number_resources
+
+
+def test_replace_url():
+    received_resources = {}
+    expected_doc = ['<link class="main-stylesheet" href="./test_dir/css-global-min.css" rel="stylesheet" type="text/css" />',
+            '<link class="main-stylesheet" href="./test_dir/css-icons-min.css" rel="stylesheet" type="text/css" />',
+             '<link class="main-stylesheet" href="./test_dir/css-fonts.css" rel="stylesheet" type="text/css" />',
+              '<link class="main-stylesheet" href="./test_dir/css-main.css" rel="stylesheet" type="text/css" />']
+    expected_soup = bs4.BeautifulSoup(''.join(expected_doc), 'lxml')
+    expected_page = expected_soup.prettify()
+    received_soup = bs4.BeautifulSoup(''.join(current_doc), 'lxml')
+    for tag in received_soup.find_all({'link': True, 'img': True, 'script': True}):
+        received_resources.update(getter.get_tag(tag, './test_dir/', 'https://mypage.org'))
+    received_page = received_soup.prettify()
+    assert received_page == expected_page
 
 
 def test_init_argparser():

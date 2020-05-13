@@ -3,14 +3,12 @@ import logging
 import os
 
 
-text_download = '{} or {}'.format(
-    'Specify the path to save the page (Example: /var/tmp)',
-    'use by default (current directory)')
-text_logger = 'Specify the logging level:{}'.format(
-    '"debuf", "info", "warning", "error", "critical" or use by default (INFO)')
-text_paths = (
-    '''The specified path does not exist or no rights to make changes''')
-default_path = os.getcwd()
+text_download = '''Specify the path to save the page (Example: /var/tmp),
+ use by default (current directory)'''
+text_logger = ''' "debug", "info", "warning", "error",
+ "critical" or use by default (INFO)'''
+text_paths = '''The specified path does not exist or
+ no rights to make changes'''
 
 
 def qualifier(param):
@@ -24,6 +22,11 @@ def qualifier(param):
         return logging.ERROR
     elif param == 'critical':
         return logging.CRITICAL
+    raise argparse.ArgumentTypeError(
+        'Unknown parametr: "{}". Use one of this: {}'.format(
+            param, text_logger
+        )
+    )
 
 
 def checking_paths(path):
@@ -43,11 +46,11 @@ def init_argparser():
     parser.add_argument(
         '-o', '--output',
         type=checking_paths,
-        default=default_path,
+        default=os.getcwd(),
         help=text_download)
     parser.add_argument(
         '-l', '--log',
+        type=qualifier,
         default='info',
-        choices=['debug', 'info', 'warning', 'error', 'critical'],
         help=text_logger)
     return parser
