@@ -5,7 +5,7 @@ import os
 import re
 import tempfile
 import logging
-from page_loader import getter, prepare, engine, cli
+from page_loader import getter, prepare, cli
 
 
 current_doc = ['<link class="main-stylesheet" href="/css/global.min.css" rel="stylesheet" type="text/css" />',
