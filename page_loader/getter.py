@@ -6,7 +6,7 @@ import logging
 from page_loader import engine, prepare
 
 
-search_tags = {'link': 'href', 'img': 'src', 'script': 'src'}
+target = {'link': 'href', 'img': 'src', 'script': 'src'}
 
 
 def get_content(url):
@@ -31,7 +31,7 @@ def get_content(url):
     return response
 
 
-def write_content(data, path):
+def get_file(data, path):
     logger = logging.getLogger()
     try:
         with open(path, 'wb') as new_file:
@@ -44,12 +44,12 @@ def write_content(data, path):
 
 
 def get_tag(tag, dir_files, url):
-    dict = {}
+    result = {}
     logger = logging.getLogger()
     domain = urllib.parse.urlparse(url)
-    flag = tag.name in search_tags.keys()
-    attr = search_tags[tag.name]
-    if flag is True and tag.has_attr(attr):
+    flag = tag.name in target.keys()
+    attr = target[tag.name]
+    if flag and tag.has_attr(attr):
         internal_reference = urllib.parse.urlparse(tag[attr])
         path = urllib.parse.urlparse(tag[attr]).path
         extn = os.path.splitext(path)[1]
@@ -61,5 +61,5 @@ def get_tag(tag, dir_files, url):
             tag[attr] = tag[attr].replace(tag[attr], path_files)
             logger.info(
                 'The link to the resource in the page has been replaced!')
-            dict[local_url] = path_files
-    return dict
+            result[local_url] = path_files
+    return result

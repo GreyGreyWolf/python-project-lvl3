@@ -13,7 +13,7 @@ def test_exceptions():
                  'python-poetry.org.html')
         with pytest.raises(PageLoaderException):
             request = getter.get_content('https://python-poetry.org')
-            getter.write_content(request.content, '/aaa/vvv')
+            getter.get_file(request.content, '/aaa/vvv')
         with pytest.raises(PageLoaderException):
             getter.get_content('htps://python-poetry.org')
         with pytest.raises(PageLoaderException):

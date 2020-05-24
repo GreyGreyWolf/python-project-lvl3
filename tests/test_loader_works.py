@@ -8,19 +8,19 @@ import logging
 from page_loader import getter, prepare, cli
 
 
-current_doc = ['<link class="main-stylesheet" href="/css/global.min.css" rel="stylesheet" type="text/css" />',
+doc = ['<link class="main-stylesheet" href="/css/global.min.css" rel="stylesheet" type="text/css" />',
                 '<link class="main-stylesheet" href="/css/icons.min.css" rel="stylesheet" type="text/css" />',
-                 '<link class="main-stylesheet" href="/css/fonts.css" rel="stylesheet" type="text/css" />',
-                  '<link class="main-stylesheet" href="/css/main.css" rel="stylesheet" type="text/css" />']
+                '<link class="main-stylesheet" href="/css/fonts.css" rel="stylesheet" type="text/css" />',
+                '<link class="main-stylesheet" href="/css/main.css" rel="stylesheet" type="text/css" />']
 
 
 def test_normalize_name():
     current_names = ['https://greygreywolf.github.io/python-project-lvl3/',
-                      'https://python-poetry.org',
-                       '/name/name']
+                    'https://python-poetry.org',
+                    '/name/name']
     expected_names = ['https---greygreywolf-github-io-python-project-lvl3',
-                       'https---python-poetry-org',
-                        'name-name']
+                    'https---python-poetry-org',
+                    'name-name']
     for elem in current_names:
         received_name = prepare.normalize_name(elem)
         status = received_name  in expected_names
@@ -57,9 +57,9 @@ def test_prepare_directory():
 
 
 def test_get_tag():
-    expected_number_resources = len(current_doc)
+    expected_number_resources = len(doc)
     receivde_resources = {}
-    soup = bs4.BeautifulSoup(''.join(current_doc), 'lxml')
+    soup = bs4.BeautifulSoup(''.join(doc), 'lxml')
     for tag in soup.find_all({'link': True, 'img': True, 'script': True}):
         receivde_resources.update(getter.get_tag(tag, './test_dir', 'https://mypage.org'))
     print(receivde_resources)
@@ -74,7 +74,7 @@ def test_replace_url():
               '<link class="main-stylesheet" href="./test_dir/css-main.css" rel="stylesheet" type="text/css" />']
     expected_soup = bs4.BeautifulSoup(''.join(expected_doc), 'lxml')
     expected_page = expected_soup.prettify()
-    received_soup = bs4.BeautifulSoup(''.join(current_doc), 'lxml')
+    received_soup = bs4.BeautifulSoup(''.join(doc), 'lxml')
     for tag in received_soup.find_all({'link': True, 'img': True, 'script': True}):
         received_resources.update(getter.get_tag(tag, './test_dir/', 'https://mypage.org'))
     received_page = received_soup.prettify()

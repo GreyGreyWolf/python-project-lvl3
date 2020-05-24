@@ -17,18 +17,18 @@ def normalize_name(name):
 
 def get_valid_name(url):
     parsed_link = urlparse(url)
-    if not parsed_link.netloc:
-        index = parsed_link.path.rfind('.')
-        exten = parsed_link.path[index + 1:]
-        main = parsed_link.path[: index]
-        main = normalize_name(main)
-        name = '{}.{}'.format(main, exten)
-    else:
+    if parsed_link.netloc:
         if parsed_link.netloc.startswith('www'):
             parsed_link.netloc = parsed_link.netloc[4:]
         name = parsed_link.netloc + parsed_link.path
         name = normalize_name(name)
         name = '{}.{}'.format(name, 'html')
+    else:
+        index = parsed_link.path.rfind('.')
+        exten = parsed_link.path[index + 1:]
+        main = parsed_link.path[: index]
+        main = normalize_name(main)
+        name = '{}.{}'.format(main, exten)
     return name
 
 
